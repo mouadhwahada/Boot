@@ -1,7 +1,9 @@
 package tn.spring.pispring.Interfaces;
 
+import org.springframework.web.multipart.MultipartFile;
 import tn.spring.pispring.Entities.Food;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface FoodInterface {
@@ -13,4 +15,5 @@ public interface FoodInterface {
     public Food getFoodDetailsByName(String foodName);
     public long getCaloriesForFood(String foodName);
     public List<Food> getNutritionAdvice(String goal);
+    public void importFromExcel(MultipartFile file) throws IOException;
 }

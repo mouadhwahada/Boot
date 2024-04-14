@@ -7,11 +7,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import tn.spring.pispring.Entities.Food;
 import tn.spring.pispring.Interfaces.FoodInterface;
 import tn.spring.pispring.Repositories.FoodRepo;
 import tn.spring.pispring.Services.FoodService;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,6 +69,15 @@ public class FoodController {
         } else {
             // Si aucun aliment n'est trouvé avec l'ID donné, retournez un statut 404
             return ResponseEntity.notFound().build();
+        }
+    }
+    @PostMapping("/import/excel")
+    public String importExcel(@RequestParam("file") MultipartFile file) {
+        try {
+            foodInterface.importFromExcel(file);
+            return "Excel file uploaded successfully!";
+        } catch (IOException e) {
+            return "Failed to upload Excel file: " + e.getMessage();
         }
     }
 

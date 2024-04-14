@@ -1,12 +1,16 @@
 package tn.spring.pispring.Services;
 
 import lombok.AllArgsConstructor;
+import org.apache.poi.ss.usermodel.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import tn.spring.pispring.Entities.Food;
 import tn.spring.pispring.Interfaces.FoodInterface;
 import tn.spring.pispring.Repositories.FoodRepo;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -72,7 +76,7 @@ public class FoodService implements FoodInterface {
         List<Food> suggestions = new ArrayList<>();
 
         if ("Gain weight".equals(goal)) {
-            suggestions = foodRepo. findByCaloriesPerServingGreaterThanEqual(300);
+            suggestions = foodRepo. findByCaloriesPerServingGreaterThanEqual(250);
 
         } else if ("Lose weight".equals(goal)) {
             suggestions = foodRepo.findByCaloriesPerServingLessThanEqual(200);
@@ -83,5 +87,56 @@ public class FoodService implements FoodInterface {
         }
 
         return suggestions;
+    }
+    @Override
+    public void importFromExcel(MultipartFile file) throws IOException {
+        try (Workbook workbook = WorkbookFactory.create(file.getInputStream())) {
+            Sheet sheet = workbook.getSheetAt(0);
+            Iterator<Row> rowIterator = sheet.iterator();
+            List<Food> foods = new ArrayList<>();
+
+            while (rowIterator.hasNext()) {
+                Row row = rowIterator.next();
+                if (row.getRowNum() == 0) continue; // Skip header row
+                Iterator<Cell> cellIterator = row.cellIterator();
+                Food food = new Food();
+
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
+                    int columnIndex = cell.getColumnIndex();
+
+                    switch (columnIndex) {
+                        case 0:
+                            food.setNamefood(cell.getStringCellValue());
+                            break;
+                        case 1:
+                            food.setCalories_per_serving((long) cell.getNumericCellValue());
+                            break;
+                        case 2:
+                            food.setProtein_per_serving((long) cell.getNumericCellValue());
+                            break;
+                        case 3:
+                            food.setCarbohydrates_per_Serving((long) cell.getNumericCellValue());
+                            break;
+                        case 4:
+                            food.setFat_per_Serving((long) cell.getNumericCellValue());
+                            break;
+                        case 5:
+                            food.setFiber_per_Serving((long) cell.getNumericCellValue());
+                            break;
+                        case 6:
+                            food.setVitamins_per_Serving(cell.getStringCellValue());
+                            break;
+                        case 7:
+                            food.setMinerals_per_Serving((long) cell.getNumericCellValue());
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                foods.add(food);
+            }
+            foodRepo.saveAll(foods);
+        }
     }
 }
