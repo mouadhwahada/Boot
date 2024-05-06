@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
 public class AuthRestAPIs {
@@ -56,6 +56,7 @@ public class AuthRestAPIs {
     MailSenderService mailSending;
     @Autowired
     JwtAuthTokenFilter jwtAuthTokenFilter;
+
     @PostMapping("/signIn")
     public ResponseEntity<JwtResponse> authenticateUser(@RequestBody SignIn login, HttpServletRequest request) {
         Optional<User> userByEmail = userRepository.findByEmail(login.getEmail());
