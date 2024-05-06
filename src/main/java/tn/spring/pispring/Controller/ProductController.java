@@ -11,6 +11,7 @@ import tn.spring.pispring.Entities.TypeProduit;
 import tn.spring.pispring.Repositories.ProductRepository;
 import tn.spring.pispring.Services.ProductService;
 
+
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +23,7 @@ import java.util.Map;
 public class ProductController {
 
     @Autowired
-ProductService productService;
+    ProductService productService;
 @Autowired
 ProductRepository productRepository;
     @PostMapping("/addProduct")
@@ -97,10 +98,10 @@ ProductRepository productRepository;
         return productService.getProductsByType(type);
     }
 
-  //  @GetMapping("/stockQuantityByType")
-    //public Integer getStockQuantityByType(@RequestParam TypeProduit type) {
-      //  return productService.getStockQuantityByType(type);
-    //}
+    @GetMapping("/stockQuantityByType")
+    public Integer getStockQuantityByType(@RequestParam TypeProduit type) {
+        return productService.getStockQuantityByType(type);
+    }
 
 
 

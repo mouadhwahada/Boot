@@ -18,8 +18,8 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
     @Query(value = "SELECT type, COUNT(*) AS count FROM Product GROUP BY type", nativeQuery = true)
     List<Map<String, Object>> countProductsByType();
 
- //   @Query("SELECT SUM(p.stockQuantity) FROM Product p WHERE p.type = :type")
-   // Integer getStockQuantityByType(@Param("type") TypeProduit type);
+    @Query("SELECT SUM(p.stockQuantity) FROM Product p WHERE p.type = :type")
+    Integer getStockQuantityByType(@Param("type") TypeProduit type);
 
 
 

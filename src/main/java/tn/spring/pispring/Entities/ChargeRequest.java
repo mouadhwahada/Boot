@@ -6,6 +6,20 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import tn.spring.pispring.dto.AbonnementDto;
+
+import javax.persistence.*;
+
+@AllArgsConstructor
+
+@Data
 public class ChargeRequest {
 
     private int orderId;

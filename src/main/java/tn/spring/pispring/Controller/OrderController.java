@@ -20,6 +20,24 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
+import tn.spring.pispring.Entities.*;
+
+import tn.spring.pispring.ServiceIMP.*;
+import tn.spring.pispring.dtos.PaymentDto;
+import tn.spring.pispring.repo.Orderrepo;
+import tn.spring.pispring.repo.UserRepository;
+
+import java.math.BigDecimal;
+import java.util.Base64;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import javax.mail.MessagingException;
 
 @AllArgsConstructor
 @CrossOrigin("*")
@@ -28,6 +46,7 @@ import java.util.UUID;
 
 @RequestMapping("/order")
 public class OrderController {
+/*
 
 
     @Autowired
@@ -35,9 +54,10 @@ public class OrderController {
     @Autowired
     OrderService orderService;
     @Autowired
-    OrderRepository orderRepository;
+    Orderrepo orderRepository;
     @Autowired
     UserRepo userRepo;
+    UserRepository userRepo;
     @Autowired
     ProductService productService;
     @Autowired
@@ -140,7 +160,6 @@ public class OrderController {
         paymentRepository.save(payment);
         try {
             // Envoi de l'e-mail à l'utilisateur avec le code de commande
-            assert user != null;
             String emailBody = "Bonjour " + user.getUsername() + ",<br><br>"
                     + "Votre commande a été traitée avec succès. Votre code de commande est : <b>" + order.getCodeOrder() + "</b>.<br><br>"
                     + "Merci de faire vos achats chez nous !";
@@ -217,6 +236,9 @@ public class OrderController {
     @PutMapping("/{codeOrder}/assign-delivery-man")
     public Orderr assignDeliveryManToOrder(@PathVariable String codeOrder, @RequestParam int deliveryManPhoneNumber) {
         return orderService.assignDeliveryManToOrder(codeOrder, deliveryManPhoneNumber);
+    return  null ;
+
+     //   return orderService.assignDeliveryManToOrder(codeOrder, deliveryManPhoneNumber);
     }
 
     @GetMapping("/searchOrderByCode")
@@ -236,7 +258,7 @@ public class OrderController {
     }
 
 
-    @PostMapping("/assign-delivery-man/{codeOrder}")
+   /* @PostMapping("/assign-delivery-man/{codeOrder}")
     public ResponseEntity<?> assignDeliveryMan(@PathVariable String codeOrder) {
         Orderr order = orderRepository.findByCodeOrder(codeOrder);
         if (order != null && order.getUser() != null) {
@@ -244,7 +266,7 @@ public class OrderController {
             if (user.getEmail() != null) {
                 try {
                     mailService.sendEmail(user.getEmail(), "Assign a delivery man to your order",
-                            "Dear " + user.getUsername() + ",<br><br>"
+                            "Dear " + user.getUsername())",<br><br>"
                                     + "You have an unassigned order. Please assign a delivery man to your order as soon as possible.<br><br>"
                                     + "Thank you.");
                     return ResponseEntity.ok().build();
@@ -261,6 +283,10 @@ public class OrderController {
 
 
 
+
+
+*/
+    /*
     @GetMapping("/orders/{deliveryManId}")
     public List<Orderr> getOrdersByDeliveryManId(@PathVariable Long deliveryManId) {
         return orderService.getOrdersByDeliveryManId(deliveryManId);
@@ -271,7 +297,8 @@ public class OrderController {
 
     @PutMapping("/orders/confirm-arrival-by-delivery-man/{orderId}")
     public ResponseEntity<Orderr> confirmOrderArrivalByDeliveryMan(@PathVariable int orderId) {
-        return orderService.confirmOrderArrivalByDeliveryMan(orderId);
+    //    return orderService.confirmOrderArrivalByDeliveryMan(orderId);
+        return null;
     }
 
     @GetMapping("/order/is-confirmed/{orderId}")
@@ -285,6 +312,7 @@ public class OrderController {
     @PutMapping("/orders/confirm-client-his-delivery/{orderCode}")
     public ResponseEntity<Orderr> confirmOrderDelivery(@PathVariable String orderCode) {
         return orderService.confirmOrderDelivery(orderCode);
+    }*/
+
     }
 
-}

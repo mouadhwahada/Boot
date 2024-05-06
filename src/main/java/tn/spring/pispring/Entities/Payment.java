@@ -1,5 +1,6 @@
 package tn.spring.pispring.Entities;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

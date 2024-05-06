@@ -28,4 +28,9 @@ public class Review {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    @JoinColumn(name="abonnement",nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Abonnement abonnement;
+
 }

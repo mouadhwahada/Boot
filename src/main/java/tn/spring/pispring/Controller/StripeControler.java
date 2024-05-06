@@ -8,10 +8,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import tn.spring.pispring.Entities.Address;
 import tn.spring.pispring.Entities.User;
-import tn.spring.pispring.Services.AddressService;
-import tn.spring.pispring.Services.StripeService;
+
+import tn.spring.pispring.ServiceIMP.AddressService;
+import tn.spring.pispring.ServiceIMP.StripeService;
+import tn.spring.pispring.ServiceIMP.UserServiceIMP;
 import tn.spring.pispring.Services.UserService;
 import tn.spring.pispring.dto.RoleName;
+import tn.spring.pispring.dtos.PaymentDto;
 
 import java.util.List;
 
@@ -73,15 +76,17 @@ public class StripeControler {
                 zone,
                 phoneNumber,
 
-                RoleName.valueOf(roleName)
+                roleName
         );
     }
 
 
     @GetMapping("/byRole/delivery_man")
     public List<User> getUsersWithDeliveryManRole() {
-        return stripeService.getUsersByRole();
+        return stripeService.getUsersByRole("Delivery_man");
     }
+
+
 
 
 
@@ -97,7 +102,7 @@ public class StripeControler {
                                                    @RequestParam("password") String password,
                                                    @RequestParam("zone") String zone,
                                                    @RequestParam("phoneNumber") int phoneNumber,
-                                                   @RequestParam("roleName") RoleName roleName,
+                                                   @RequestParam("roleName") String roleName,
                                                    @RequestParam("imageFile") MultipartFile imageFile) {
         try {
             User user = addressService.createUserWithRoleee(userName, email, password, zone, phoneNumber, roleName, imageFile);
@@ -106,7 +111,6 @@ public class StripeControler {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
 
     @PostMapping("/createAddress")

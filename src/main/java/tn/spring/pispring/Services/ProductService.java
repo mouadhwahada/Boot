@@ -145,11 +145,10 @@ public class ProductService implements ProductInterface {
     }
 
 
-///boucle
 
-    // public Integer getStockQuantityByType(TypeProduit type) {
-    //   return productRepository.getStockQuantityByType(type);
-    // }
+     public Integer getStockQuantityByType(TypeProduit type) {
+       return productRepository.getStockQuantityByType(type);
+     }
 
 
     public List<Product> getFilteredProducts(Float minPrice, Float maxPrice) {

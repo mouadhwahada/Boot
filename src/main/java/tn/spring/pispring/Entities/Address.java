@@ -6,12 +6,22 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-@Entity
-@Getter
-@Setter
-@NoArgsConstructor
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import tn.spring.pispring.dto.AbonnementDto;
+
+import javax.persistence.*;
+import java.io.Serializable;
+
 @AllArgsConstructor
-@ToString
+@NoArgsConstructor
+@Entity
+@Data
 public class Address implements Serializable {
 
     @Id
