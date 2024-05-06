@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -41,6 +42,17 @@ public class User {
 
     private Set <Role> roles = new HashSet<>();
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<Participation> participatios;
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(
+            name="user_workout_program",
+            joinColumns = @JoinColumn(name="user_id"),
+            inverseJoinColumns = @JoinColumn(name="workout_id")
+    )
+    private Set<Workoutprogram> workoutPrograms;
 
     public User(String name,String lastname, String username, String email, String password, boolean blocked, String address, boolean valid) {
 

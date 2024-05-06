@@ -56,6 +56,7 @@ public class AuthRestAPIs {
     MailSenderService mailSending;
     @Autowired
     JwtAuthTokenFilter jwtAuthTokenFilter;
+
     @PostMapping("/signIn")
     public ResponseEntity<JwtResponse> authenticateUser(@RequestBody SignIn login, HttpServletRequest request) {
         Optional<User> userByEmail = userRepository.findByEmail(login.getEmail());
