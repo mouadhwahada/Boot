@@ -1,20 +1,28 @@
 package tn.spring.pispring.Controller;
-
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import tn.spring.pispring.Entities.Food;
 import tn.spring.pispring.Interfaces.FoodInterface;
-import tn.spring.pispring.Repositories.FoodRepo;
+
 import tn.spring.pispring.Services.FoodService;
+import tn.spring.pispring.repo.FoodRepo;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @AllArgsConstructor
@@ -24,10 +32,10 @@ import java.util.Optional;
 
 @RestController
 public class FoodController {
-  @Autowired
-          FoodRepo foodRepo;
-   FoodInterface foodInterface;
-   @GetMapping("/retrieveFood")
+
+    FoodRepo foodRepo;
+    FoodInterface foodInterface;
+    @GetMapping("/retrieveFood")
     public List<Food> retrieveFood() {
         return foodInterface.retrieveFood();
     }
@@ -72,12 +80,16 @@ public class FoodController {
         }
     }
     @PostMapping("/import/excel")
-    public String importExcel(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<Map<String, String>> importExcel(@RequestParam MultipartFile file) {
         try {
             foodInterface.importFromExcel(file);
-            return "Excel file uploaded successfully!";
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Excel file uploaded successfully!");
+            return ResponseEntity.ok(response);
         } catch (IOException e) {
-            return "Failed to upload Excel file: " + e.getMessage();
+            Map<String, String> response = new HashMap<>();
+            response.put("error", "Failed to upload Excel file: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
 

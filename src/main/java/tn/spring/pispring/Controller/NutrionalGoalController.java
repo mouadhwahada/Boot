@@ -1,6 +1,6 @@
 package tn.spring.pispring.Controller;
 
-import jakarta.persistence.EntityNotFoundException;
+
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +12,7 @@ import tn.spring.pispring.Interfaces.NutritionalGoalInterface;
 import tn.spring.pispring.Services.NutritionTrackingService;
 import tn.spring.pispring.Services.NutritionalGoalService;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +27,7 @@ public class NutrionalGoalController {
     public List<NutritionalGoal> retrieveAllNutGoals() {
         return INutgoal.retrieveAllNutGoals();
     }
-   @PostMapping("/createNutritionalGoal")
+    @PostMapping("/createNutritionalGoal")
     public NutritionalGoal addNutritionalGoal(@RequestBody NutritionalGoal nutritionalGoal) {
         return INutgoal.addNutritionalGoal(nutritionalGoal);
     }
@@ -41,7 +42,7 @@ public class NutrionalGoalController {
     }
 
 
-     @DeleteMapping("/deleteNutritionalGoal/{idNutGoal}")
+    @DeleteMapping("/deleteNutritionalGoal/{idNutGoal}")
     public void removeNutritionalGoal(@PathVariable("idNutGoal")long idNutGoal) {
         INutgoal.removeNutritionalGoal(idNutGoal);
     }
@@ -84,6 +85,15 @@ public class NutrionalGoalController {
             return ResponseEntity.ok(goal);
         } else {
             return ResponseEntity.notFound().build();
+        }
+    }
+    @PostMapping("/associateUserWithNutritionalGoal")
+    public ResponseEntity<String> associateUserWithNutritionalGoal(@RequestParam Long userId, @RequestParam Long nutritionalGoalId) {
+        try {
+            INutgoal.associateUserWithNutritionalGoal(userId, nutritionalGoalId);
+            return ResponseEntity.ok("User associated with nutritional goal successfully.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
     private final NutritionalGoalService INutgoal;

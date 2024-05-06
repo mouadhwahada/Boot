@@ -23,5 +23,6 @@ public interface NutritionalGoalInterface {
     public void dissociateNutritionTracking(NutritionalGoal nutritionalGoal, NutritionTracking nutritionTracking);
     public NutritionalGoal getDailyCalorieGoalForTracking(Long trackingId);
     NutritionalGoal getNutritionalGoalForTracking(Long trackingId);
+    public void associateUserWithNutritionalGoal(Long userId, Long nutritionalGoalId);
 
 }
