@@ -1,5 +1,5 @@
 package tn.spring.pispring.dto;
-
+/*
 public enum OrderStatus {
 
     Pending,
@@ -8,4 +8,4 @@ public enum OrderStatus {
     Shipped,
     Delivered,Refused
     ,Accepted
-}
+}*/

@@ -16,7 +16,7 @@ import tn.spring.pispring.Entities.User;
 import tn.spring.pispring.Interfaces.OTPInterface;
 import tn.spring.pispring.Interfaces.UserServiceInterface;
 import tn.spring.pispring.ServiceseExternes.MailSenderService;
-import tn.spring.pispring.dto.OrderStatus;
+import tn.spring.pispring.Entities.OrderStatus;
 import tn.spring.pispring.dto.ResetPass;
 import tn.spring.pispring.dto.RoleName;
 import tn.spring.pispring.repo.OrderRepository;
@@ -27,8 +27,7 @@ import javax.validation.Valid;
 import java.util.*;
 
 @Service
-public class
-UserServiceIMP implements UserServiceInterface {
+public class UserServiceIMP implements UserServiceInterface {
 
 
     @Autowired
@@ -88,6 +87,16 @@ UserServiceIMP implements UserServiceInterface {
             }
         }
     }
+
+    @Override
+    public void updateUser(Long id) {
+
+    }
+/*
+    public void updateUser(User user) {
+        return userRepository.save(user);
+    }*/
+
     public void  debloqueUser(Long idUser){
         Optional<User> user = userRepository.findById(idUser);
         User user1 = user.get();
@@ -105,10 +114,10 @@ UserServiceIMP implements UserServiceInterface {
         }
     }
 
-    @Override
+   /* @Override
     public void updateUser(Long id) {
 
-    }
+    }*/
 
 /*
     public List<User> getUsersOrderBySum_totalAsc(){
@@ -137,6 +146,8 @@ UserServiceIMP implements UserServiceInterface {
             }
         }
     }
+
+
 
     public ResponseEntity<User> registerUser(User user1, String roleName) {
         if (userRepository.existsByUsername(user1.getUsername())) {
@@ -280,6 +291,30 @@ public ResponseEntity<?> userforgetpassword(String email) {
 
         }
     }
+
+    public User CreateUser(User user) {
+        return userRepository.save(user);
+    }
+
+
+
+    public List<User> retrieveAllUsers() {
+        return userRepository.findAll();
+    }
+
+
+
+    public User updateUser(User user) {
+        return userRepository.save(user);
+    }
+
+
+    public User retrieveUser(long idUser) {
+        return userRepository.findById(idUser).orElse(null);
+    }
+
+
+
 }
 
 

@@ -2,7 +2,6 @@ package tn.spring.pispring.Entities;
 
 import lombok.Data;
 import tn.spring.pispring.dto.OrderDto;
-import tn.spring.pispring.dto.OrderStatus;
 
 import javax.persistence.*;
 import java.util.Date;

@@ -60,24 +60,24 @@ public class JwtAuthTokenFilter implements Filter {
 
     // Modify JwtAuthTokenFilter to handle refresh tokens from session
     public String getJwt(HttpServletRequest request, HttpSession session) {
-    // Check for access token
-    String accessToken = extractAccessToken(request);
-    if (accessToken != null) {
-        return accessToken;
+        // Check for access token
+        String accessToken = extractAccessToken(request);
+        if (accessToken != null) {
+            return accessToken;
+        }
+
+        // Check for refresh token from session
+        String refreshToken = (String) session.getAttribute("refreshToken");
+        if (refreshToken != null && isValidRefreshToken(refreshToken)) {
+            // Issue new access token
+            String newAccessToken = issueNewAccessToken(refreshToken);
+
+            // Return new access token
+            return newAccessToken;
+        }
+
+        return null;
     }
-
-    // Check for refresh token from session
-    String refreshToken = (String) session.getAttribute("refreshToken");
-    if (refreshToken != null && isValidRefreshToken(refreshToken)) {
-        // Issue new access token
-        String newAccessToken = issueNewAccessToken(refreshToken);
-
-        // Return new access token
-        return newAccessToken;
-    }
-
-    return null;
-}
 
     public String issueNewAccessToken(String refreshToken) {
         try {
@@ -95,7 +95,7 @@ public class JwtAuthTokenFilter implements Filter {
                     .signWith(SignatureAlgorithm.HS512, jwtSecret)
                     .compact();
         } catch (Exception e) {
-       //     logger.error("Error issuing new access token: {}", e.getMessage());
+            //     logger.error("Error issuing new access token: {}", e.getMessage());
             return null;
         }
     }
@@ -106,7 +106,7 @@ public class JwtAuthTokenFilter implements Filter {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(refreshToken);
             return true;
         } catch (Exception e) {
-   //         logger.error("Invalid refresh token: {}", e.getMessage());
+            //         logger.error("Invalid refresh token: {}", e.getMessage());
             return false;
         }
     }
@@ -180,11 +180,10 @@ public class JwtAuthTokenFilter implements Filter {
             refreshToken = request.getHeader("RefreshToken");
             if (refreshToken != null ) {
                 // Extract the token from the Authorization header
-              //  refreshToken = refreshToken.substring(7);
+                //  refreshToken = refreshToken.substring(7);
                 return refreshToken;
             }
         }
         return null; // Return null if refresh token is not found in both parameters and headers
     }
 }
-

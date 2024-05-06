@@ -13,6 +13,8 @@ import java.util.Optional;
 
 public interface UserServiceInterface {
 
+    public User CreateUser(User user);
+
     public List<User> getAllUser() ;
 
     public User getUserById(Long idUser);
@@ -27,6 +29,9 @@ public interface UserServiceInterface {
     public void updateUser(Long id);
 
     public void validInscription(Long id) ;
+
+    User updateUser (User user);
+
 
     public ResponseEntity<User> registerUser(User user1, String roleName);
 

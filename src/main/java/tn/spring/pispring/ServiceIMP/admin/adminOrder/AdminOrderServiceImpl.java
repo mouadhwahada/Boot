@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tn.spring.pispring.Entities.Order;
 import tn.spring.pispring.dto.OrderDto;
-import tn.spring.pispring.dto.OrderStatus;
+import tn.spring.pispring.Entities.OrderStatus;
 import tn.spring.pispring.repo.OrderRepository;
 
 import java.util.List;

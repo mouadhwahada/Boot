@@ -2,6 +2,7 @@ package tn.spring.pispring.dto;
 
 import lombok.Data;
 import tn.spring.pispring.Entities.CartItems;
+import tn.spring.pispring.Entities.OrderStatus;
 import tn.spring.pispring.Entities.User;
 
 import javax.persistence.*;

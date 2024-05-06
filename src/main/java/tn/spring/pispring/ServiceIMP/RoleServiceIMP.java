@@ -30,7 +30,7 @@ public class RoleServiceIMP implements RoleServiceInterface {
         roleRepository.delete(roleToDelete);
     }
 
-    @Override
+    @Override//retrieveAllRoles
     public List<Role> getAllRoles() {
         return roleRepository.findAll();
     }
@@ -39,5 +39,20 @@ public class RoleServiceIMP implements RoleServiceInterface {
         for (RoleName roleName:RoleName.values()){
             addRole(roleName);
         }
+
+    }
+
+    @Override
+    public List<Role> retrieveAllRoles() {
+        return roleRepository.findAll();    }
+
+    @Override
+    public Role updateRole(Role role) {
+        return roleRepository.save(role);
+    }
+
+    @Override
+    public Role retrieveRole(long idRole) {
+        return roleRepository.findById(idRole).orElse(null);
     }
 }
